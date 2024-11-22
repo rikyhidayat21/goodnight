@@ -63,6 +63,17 @@ module Api
         end
       end
 
+      def following_sleep_records
+        following_ids = @user.following.pluck(:id)
+
+        records = SleepRecord.includes(:user)
+                            .where(user_id: following_ids)
+                            .where(created_at: 1.week.ago..Time.current)
+                            .order(duration_mintes: :desc)
+
+        render json: records, include: { user: { only: [ :id, :name ] } }
+      end
+
       private
 
       def set_user
