@@ -1,6 +1,8 @@
 module Api
   module V1
     class FollowsController < ApplicationController
+      include UserLookup
+
       before_action :set_user
       before_action :set_followed_user, only: :create
 
@@ -25,12 +27,6 @@ module Api
       end
 
       private
-
-      def set_user
-        @user = User.find(params[:user_id])
-      rescue ActiveRecord::RecordNotFound
-        render json: { error: "User not found" }, status: :not_found
-      end
 
       def set_followed_user
         @followed_user = User.find(params[:followed_id])

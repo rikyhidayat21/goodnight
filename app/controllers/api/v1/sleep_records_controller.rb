@@ -1,6 +1,8 @@
 module Api
   module V1
     class SleepRecordsController < ApplicationController
+      include UserLookup
+
       before_action :set_user
 
       def clock_in
@@ -33,14 +35,6 @@ module Api
                             .order(duration_minutes: :desc)
 
         render json: records, include: { user: { only: [ :id, :name ] } }
-      end
-
-      private
-
-      def set_user
-        @user = User.find(params[:user_id])
-      rescue ActiveRecord::RecordNotFound
-        render json: { error: "User not found" }, status: :not_found
       end
     end
   end
