@@ -23,7 +23,7 @@ module Api
         sleep_record = @user.sleep_records.build(clock_in: Time.current)
 
         if sleep_record.save
-          render json: sleep_record, status: :created
+          render json: { data: @user.sleep_records.recent }, status: :created
         else
           render json: { errors: sleep_record.errors }, status: :unprocessable_entity
         end

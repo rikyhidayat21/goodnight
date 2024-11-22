@@ -3,6 +3,8 @@ class SleepRecord < ApplicationRecord
 
   before_save :calculate_sleep_duration, if: :clock_out?
 
+  scope :recent, -> { order(created_at: :desc) }
+
   private
 
   def calculate_sleep_duration
