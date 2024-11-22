@@ -13,6 +13,8 @@ Rails.application.routes.draw do
         member do
           post "clock_in"
           post "clock_out"
+          post "follow"
+          post "unfollow"
         end
       end
     end
