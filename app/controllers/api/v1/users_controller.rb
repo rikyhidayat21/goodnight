@@ -53,6 +53,16 @@ module Api
         render json: { errors: e.message }, status: :not_found
       end
 
+      def unfollow
+        followed = @user.active_follows.find_by(followed_id: params[:followed_id])
+
+        if followed&.destroy
+          render json: { message: "Successfully unfollowed user" }
+        else
+          render json: { error: "Follow relationship not found" }, status: :not_found
+        end
+      end
+
       private
 
       def set_user
