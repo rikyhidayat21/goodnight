@@ -19,6 +19,16 @@ module Api
         end
       end
 
+      def clock_in
+        @sleep_record = @user.sleep_records.build(clock_in: Time.current)
+
+        if @sleep_record.save
+          render json: @sleep_record, status: :created
+        else
+          render json: { errors: @sleep_record.errors }, status: :unprocessable_entity
+        end
+      end
+
       private
 
       def set_user
@@ -28,7 +38,7 @@ module Api
       end
 
       def user_params
-        params.require(:user).permit(:name, :clock_in, :clock_out)
+        params.require(:user).permit(:name)
       end
     end
   end
