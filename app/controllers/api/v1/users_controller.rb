@@ -29,6 +29,17 @@ module Api
         end
       end
 
+      def clock_out
+        @sleep_record = @user.sleep_records.where(clock_out: nil).order(created_at: :desc).first
+
+        if @sleep_record
+          @sleep_record.update(clock_out: Time.current)
+          render json: @sleep_record
+        else
+          render json: { error: "No active sleep record found" }, status: :not_found
+        end
+      end
+
       private
 
       def set_user

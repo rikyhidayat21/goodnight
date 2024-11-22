@@ -12,6 +12,7 @@ Rails.application.routes.draw do
       resources :users, only: [ :index, :create ] do
         member do
           post "clock_in"
+          post "clock_out"
         end
       end
     end
