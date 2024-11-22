@@ -1,6 +1,8 @@
 module Api
   module V1
     class UsersController < ApplicationController
+      before_action :set_user, except: [ :index, :create ]
+
       def index
         @users = User.select(:id, :name)
 
@@ -19,8 +21,14 @@ module Api
 
       private
 
+      def set_user
+        @user = User.find(params[:id])
+      rescue ActiveRecord::RecordNotFound
+        render json: { error: "User not found" }, status: :not_found
+      end
+
       def user_params
-        params.require(:user).permit(:name)
+        params.require(:user).permit(:name, :clock_in, :clock_out)
       end
     end
   end
