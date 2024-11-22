@@ -15,6 +15,7 @@ Rails.application.routes.draw do
           post "clock_out"
           post "follow"
           post "unfollow"
+          get "following_sleep_records"
         end
       end
     end
