@@ -47,7 +47,7 @@ module Api
         if follow.save
           render json: { message: "Successfully followed user" }, status: :created
         else
-          render json: { errors: follow.error }, status: :unprocessable_entity
+          render json: { errors: follow.errors }, status: :unprocessable_entity
         end
       rescue ActiveRecord::RecordNotFound => e
         render json: { errors: e.message }, status: :not_found
