@@ -40,6 +40,19 @@ module Api
         end
       end
 
+      def follow
+        followed_user = User.find(params[:followed_id])
+        follow = @user.active_follows.build(followed: followed_user)
+
+        if follow.save
+          render json: { message: "Successfully followed user" }, status: :created
+        else
+          render json: { errors: follow.error }, status: :unprocessable_entity
+        end
+      rescue ActiveRecord::RecordNotFound => e
+        render json: { errors: e.message }, status: :not_found
+      end
+
       private
 
       def set_user
