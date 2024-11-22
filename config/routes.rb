@@ -13,9 +13,13 @@ Rails.application.routes.draw do
         member do
           post "clock_in"
           post "clock_out"
-          post "follow"
-          post "unfollow"
           get "following_sleep_records"
+        end
+
+        resources :follows, only: [ :create ] do
+          collection do
+            delete :destroy
+          end
         end
       end
     end
