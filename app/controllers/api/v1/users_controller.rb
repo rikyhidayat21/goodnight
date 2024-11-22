@@ -40,29 +40,6 @@ module Api
         end
       end
 
-      def follow
-        followed_user = User.find(params[:followed_id])
-        follow = @user.active_follows.build(followed: followed_user)
-
-        if follow.save
-          render json: { message: "Successfully followed user" }, status: :created
-        else
-          render json: { errors: follow.errors }, status: :unprocessable_entity
-        end
-      rescue ActiveRecord::RecordNotFound => e
-        render json: { errors: e.message }, status: :not_found
-      end
-
-      def unfollow
-        followed = @user.active_follows.find_by(followed_id: params[:followed_id])
-
-        if followed&.destroy
-          render json: { message: "Successfully unfollowed user" }
-        else
-          render json: { error: "Follow relationship not found" }, status: :not_found
-        end
-      end
-
       def following_sleep_records
         following_ids = @user.following.pluck(:id)
 
