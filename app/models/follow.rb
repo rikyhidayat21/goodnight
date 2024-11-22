@@ -6,4 +6,11 @@ class Follow < ApplicationRecord
     scope: :followed_id,
     message: "unable to follow the same user"
   }
+  validate :not_self_follow
+
+  private
+
+  def not_self_follow
+    errors.add(:base, "unable to follow themselves") if follower_id == followed_id
+  end
 end
