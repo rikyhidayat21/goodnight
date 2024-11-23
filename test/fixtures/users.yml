@@ -5,3 +5,9 @@ one:
 
 two:
   name: MyString
+
+three:
+  name: MyString
+
+four:
+  name: MyString
