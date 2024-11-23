@@ -1,24 +1,27 @@
-# README
+# Good Night APIs
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Overview
+Good Night APIs let users track when do they go to bed and when do they wake up.
 
-Things you may want to cover:
+This application is using:
+- ruby version 3.3.5
+- rails version 8.0.0
 
-* Ruby version
+## Features
+- Users is able to clock in ✅ 
+- Users is able to clock out ✅ 
+- Users is able to follow another users ✅ 
+- Users is able to unfollow another users ✅ 
+- Users is able to see their following users sleep records from previous week, which sorted based on duration sleep times ✅
+- Users is unable to follow themselves ✅ 
 
-* System dependencies
+## Sequence Diagram
 
-* Configuration
+![alt text](<Good Night APIs.png>)
 
-* Database creation
+## How to run locally
 
-* Database initialization
+**Prerequisite**
+- installed Ruby & Ruby on Rails
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+**Step by step**
