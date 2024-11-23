@@ -33,6 +33,28 @@ module Api
           assert_response :created
         end
       end
+
+      class ClockOutTest < SleepRecordsControllerTest
+        test "should return not found for non-existing user" do
+          post "/api/v1/users/999999/sleep_records/clock_out"
+          assert_response :not_found
+        end
+
+        test "should return not found when no active sleep record" do
+          post "/api/v1/users/#{@one.id}/sleep_records/clock_out"
+
+          assert_response :not_found
+          assert_equal "No active sleep record found", JSON.parse(response.body)["error"]
+        end
+
+        test "should update sleep record with clock out time" do
+          SleepRecord.create!(user: @one, clock_in: 1.hour.ago)
+
+          post "/api/v1/users/#{@one.id}/sleep_records/clock_out"
+          response_data = JSON.parse(response.body)
+          assert_not_nil response_data["clock_out"]
+        end
+      end
     end
   end
 end
