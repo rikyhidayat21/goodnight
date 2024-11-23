@@ -25,3 +25,11 @@ This application is using:
 - installed Ruby & Ruby on Rails
 
 **Step by step**
+```bash
+git clone https://github.com/rikyhidayat21/goodnight.git
+cd goodnight
+bundle install
+rails db:schema:load
+rails db:seed
+rails s
+```
