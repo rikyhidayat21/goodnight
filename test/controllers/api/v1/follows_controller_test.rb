@@ -56,25 +56,25 @@ module Api
           Follow.create!(follower: @one, followed: @two)
 
           assert_difference("Follow.count", -1) do
-            delete "/api/v1/users/#{@one.id}/follows", params: { followed_id: @two.id }
+            delete "/api/v1/users/#{@one.id}/follows/#{@two.id}"
           end
           assert_response :success
           assert_equal "Successfully unfollowed user", JSON.parse(response.body)["message"]
         end
 
         test "should return not found when unfollowing non-followed user" do
-          delete "/api/v1/users/#{@one.id}/follows", params: { followed_id: @two.id }
+          delete "/api/v1/users/#{@one.id}/follows/#{@two.id}"
           assert_response :not_found
           assert_equal "Follow relationship not found", JSON.parse(response.body)["error"]
         end
 
         test "should return not found for non-existent user when unfollowing" do
-          delete "/api/v1/users/999999/follows"
+          delete "/api/v1/users/999999/follows/#{@two.id}"
           assert_response :not_found
         end
 
         test "should return not found when unfollowing non-existent user" do
-          delete "/api/v1/users/#{@one.id}/follows", params: { followed_id: 999999 }
+          delete "/api/v1/users/#{@one.id}/follows/999999"
           assert_response :not_found
         end
       end
