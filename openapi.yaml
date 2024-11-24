@@ -114,3 +114,140 @@ paths:
                 properties:
                   errors:
                     type: object
+  /api/v1/users/{user_id}/sleep_records/clock_in:
+    post:
+      summary: Clock in a sleep record
+      description: Creates a new sleep record with the current time as the clock-in time.
+      tags:
+        - Sleep Records
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            example: 1
+          description: The ID of the current user.
+      responses:
+        '201':
+          description: Successfully clocked in.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    description: List of recent sleep records.
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        clock_in:
+                          type: string
+                          format: date-time
+                          example: "2024-11-23T10:00:00Z"
+                        clock_out:
+                          type: string
+                          format: date-time
+                          example: null
+        '422':
+          description: Validation error when creating the sleep record.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+
+  /api/v1/users/{user_id}/sleep_records/clock_out:
+    patch:
+      summary: Clock out a sleep record
+      description: Updates the most recent active sleep record with the current time as the clock-out time.
+      tags:
+        - Sleep Records
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            example: 1
+          description: The ID of the current user.
+      responses:
+        '200':
+          description: Successfully clocked out.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  clock_in:
+                    type: string
+                    format: date-time
+                    example: "2024-11-23T10:00:00Z"
+                  clock_out:
+                    type: string
+                    format: date-time
+                    example: "2024-11-23T18:00:00Z"
+        '404':
+          description: No active sleep record found to clock out.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: No active sleep record found
+
+  /api/v1/users/{user_id}/sleep_records/following:
+    get:
+      summary: Get sleep records of following users
+      description: Retrieves sleep records of users the current user is following, from the past week.
+      tags:
+        - Sleep Records
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            example: 1
+          description: The ID of the current user.
+      responses:
+        '200':
+          description: Successfully retrieved sleep records of followed users.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 1
+                    clock_in:
+                      type: string
+                      format: date-time
+                      example: "2024-11-23T10:00:00Z"
+                    clock_out:
+                      type: string
+                      format: date-time
+                      example: "2024-11-23T18:00:00Z"
+                    user:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 2
+                        name:
+                          type: string
+                          example: "John Doe"

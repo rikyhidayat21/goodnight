@@ -13,7 +13,7 @@ Rails.application.routes.draw do
         resources :sleep_records do
           collection do
             post :clock_in
-            post :clock_out
+            patch :clock_out
             get :following
           end
         end
