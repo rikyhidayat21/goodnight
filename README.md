@@ -30,6 +30,21 @@ git clone https://github.com/rikyhidayat21/goodnight.git
 cd goodnight
 bundle install
 rails db:schema:load
-rails db:seed
+rails db:seed # create users dummy (check on db/seeds.rb)
 rails s
 ```
+
+## How to use the APIs
+There's an openapi that I've been created for this app. To use them easily, just follow these steps:
+- copy all the content inside `openapi.yaml`
+- open a browser, and go to this website: https://editor.swagger.io/
+- at the editor page, paste the content from `openapi.yaml` to the left page panel
+- you can try the APIs at the website page, don't forget to run the local server
+
+![alt text](<swagapi.png>)
+
+## Build with
+Vanilla Rails API only
+
+- Ruby 3.3.5
+- Rails 8.0.0
