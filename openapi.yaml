@@ -63,3 +63,54 @@ paths:
                 properties:
                   errors:
                     type: object
+  /api/v1/users/{user_id}/follows/{followed_id}:
+    delete:
+      summary: Unfollow a user
+      description: Unfollow a relationship with the specified user.
+      tags:
+        - Follows
+      parameters:
+        - name: user_id
+          in: path
+          description: The ID of the user.
+          required: true
+          schema:
+            type: integer
+            example: 123
+        - name: followed_id
+          in: path
+          description: The ID of unfollowed user.
+          required: true
+          schema:
+            type: integer
+            example: 123
+      responses:
+        '201':
+          description: Successfully unfollowed the user.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Successfully unfollowed user
+        '404':
+          description: User to unfollow not found.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: User to unfollow not found
+        '422':
+          description: Validation error when unfollowing the user.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object

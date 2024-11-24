@@ -18,11 +18,7 @@ Rails.application.routes.draw do
           end
         end
 
-        resources :follows, only: [ :create ] do
-          collection do
-            delete :destroy
-          end
-        end
+        resources :follows, only: [ :create, :destroy ], param: :followed_id
       end
     end
   end
