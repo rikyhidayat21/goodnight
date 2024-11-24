@@ -1,0 +1,65 @@
+openapi: 3.0.1
+info:
+  title: Good Night APIs
+  description: Good Night APIs let users track when do they go to bed and when do they wake up.
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000
+    description: Local development server
+paths:
+  /api/v1/users/{user_id}/follows:
+    post:
+      summary: Follow a user
+      description: Creates a follow relationship with the specified user.
+      tags:
+        - Follows
+      parameters:
+        - name: user_id
+          in: path
+          description: The ID of the user.
+          required: true
+          schema:
+            type: integer
+            example: 123
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                followed_id:
+                  type: integer
+                  description: The ID of the user to follow.
+              required:
+                - followed_id
+      responses:
+        '201':
+          description: Successfully followed the user.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Successfully followed user
+        '404':
+          description: User to follow not found.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: User to follow not found
+        '422':
+          description: Validation error when creating the follow.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
